@@ -1,15 +1,35 @@
-## Put comments here that give an overall description of what your
-## functions do
+## makeCacheMatrix() creates a list object representing 
+## a matrix and interface functions to it.
 
-## Write a short comment describing this function
+## For data consistency there is not interface function
+## to set inverse matrix from the outside
 
+## create an object for given matrix 'x'
 makeCacheMatrix <- function(x = matrix()) {
+  inv <- NULL
 
+  ##set new matrix to object
+  set <- function(y){
+    x <<- y
+    inv <<- NULL
+  }
+  
+  ##get matrix
+  get <- function() x
+  
+  ##get inverse matrix
+  get_inv <- function(){
+    if(is.null(inv)){
+      inv <<- solve(x)
+    }
+    return(inv)
+  }
+  
+  list(set=set, get=get, get_inv=get_inv)
 }
 
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(O, ...) {
+        ## return a matrix that is the inverse of 'x'
+  O$get_inv()
 }
